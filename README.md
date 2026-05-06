@@ -25,9 +25,9 @@ The app follows modern UI/UX practices and includes authentication, validation, 
 
 ---
 
-### 🌙 Dark Mode
-- Users can toggle between **Light Mode** and **Dark Mode**
-- Improves user experience and accessibility
+### 🌙 Dark Mode / Light Mode
+- Dark mode and light mode are fully implemented
+- Users can easily toggle between themes
 
 ---
 
@@ -37,12 +37,22 @@ The app follows modern UI/UX practices and includes authentication, validation, 
 
 ---
 
-## 🛠️ Tech Stack
+## 🔐 Demo Credentials
 
-- **React Native**
-- **TypeScript**
-- **Redux Toolkit (RTK)**
-- **React Navigation**
+You can use the following demo account to test the application:
+
+- **Phone Number:** 01976600215  
+- **Password:** 123456789 
+
+> Note: These are demo credentials for testing purposes only.
+
+---
+
+## 🛠️ Tech Stack
+- React Native
+- TypeScript
+- Redux Toolkit (RTK)
+- React Navigation
 
 ---
 
@@ -59,4 +69,4 @@ cd your-repo-name
 npm install
 
 # Run the app
-npx expo run:android 
+npx expo run:android
