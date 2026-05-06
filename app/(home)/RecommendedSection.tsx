@@ -121,7 +121,6 @@ export default function RecommendedSection() {
         ))}
       </View>
 
-      {/* See All Button - Only show if more than 5 items */}
       {allJobs.length > 5 && (
         <View className="items-center mt-4">
           <TouchableOpacity 

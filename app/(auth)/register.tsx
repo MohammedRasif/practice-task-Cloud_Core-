@@ -29,7 +29,6 @@ export default function RegisterScreen() {
   };
 
   const handleRegister = async () => {
-    // Basic validation
     if (!formData.name || !formData.phone || !formData.email || !formData.password) {
       Toast.show({
         type: 'error',
@@ -59,13 +58,10 @@ export default function RegisterScreen() {
           text2: response.message || 'Please verify your phone number.',
         });
 
-        // Navigate to verification screen
         router.push({
           pathname: '/(auth)/verification',
           params: { 
             phone: formData.phone,
-            // If the API returns the OTP directly (as seen in the image), 
-            // we can pass it for easy testing, though in production you'd get it via SMS.
             otp: response.otp?.toString() 
           }
         });
@@ -94,13 +90,11 @@ export default function RegisterScreen() {
         bottomOffset={62}
       >
         
-        {/* Header Section */}
         <View style={styles.headerContainer}>
           <Text style={styles.title}>Create Account</Text>
           <Text style={styles.subtitle}>Sign up to get started</Text>
         </View>
 
-        {/* Input Fields */}
         <View style={styles.formContainer}>
           
           <View style={styles.inputWrapper}>
@@ -181,7 +175,6 @@ export default function RegisterScreen() {
             />
           </View>
 
-          {/* DOB Input */}
           <View style={styles.inputWrapper}>
             <Ionicons name="calendar-outline" size={20} color="#6B7280" style={styles.inputIcon} />
             <TextInput
@@ -193,7 +186,6 @@ export default function RegisterScreen() {
             />
           </View>
 
-          {/* Gender Input */}
           <View style={styles.inputWrapper}>
             <Ionicons name="male-female-outline" size={20} color="#6B7280" style={styles.inputIcon} />
             <TextInput
@@ -207,7 +199,6 @@ export default function RegisterScreen() {
 
         </View>
 
-        {/* Action Button */}
         <TouchableOpacity 
           style={styles.buttonContainer} 
           onPress={handleRegister} 
@@ -228,7 +219,6 @@ export default function RegisterScreen() {
           </LinearGradient>
         </TouchableOpacity>
 
-        {/* Navigation Link */}
         <View style={styles.footerContainer}>
           <Text style={styles.footerText}>Already have an account? </Text>
           <TouchableOpacity onPress={() => router.push('/(auth)/login')}>

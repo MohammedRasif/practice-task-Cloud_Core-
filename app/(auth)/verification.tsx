@@ -81,7 +81,6 @@ export default function VerificationScreen() {
           device_token: '',
         }));
 
-        // Navigate to the main app
         router.push('/(tabs)/home');
       } else {
         Toast.show({

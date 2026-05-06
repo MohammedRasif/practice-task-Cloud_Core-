@@ -38,7 +38,6 @@ export default function HeroSection() {
 
   return (
     <View className="h-[400px] w-full relative overflow-hidden bg-white dark:bg-slate-900">
-      {/* Background Gradient */}
       <View className="absolute inset-0">
         <Svg height="100%" width="100%">
           <Defs>
@@ -51,7 +50,6 @@ export default function HeroSection() {
         </Svg>
       </View>
 
-      {/* Theme Toggle Button */}
       <TouchableOpacity
         onPress={toggleColorScheme}
         className="absolute top-12 right-6 z-20 w-10 h-10 rounded-full bg-white/20 items-center justify-center border border-white/30"
@@ -89,7 +87,6 @@ export default function HeroSection() {
         </View>
       </View>
 
-      {/* Wave Container */}
       <View style={{ position: 'absolute', bottom: -1, left: 0, right: 0, height: 100, zIndex: 5 }}>
         <Animated.View style={animatedWaveStyle2}>
           <Svg height="100" width={width * 3} viewBox={`0 0 ${width * 3} 100`}>

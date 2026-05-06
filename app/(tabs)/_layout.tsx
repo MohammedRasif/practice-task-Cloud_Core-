@@ -20,7 +20,7 @@ export default function _layout() {
   return (
     <Tabs
       tabBar={(props) => <CustomTabBar {...props} insets={insets} />}
-      sceneContainerStyle={{ backgroundColor: 'transparent' }} // Ensure background doesn't interfere
+      sceneContainerStyle={{ backgroundColor: 'transparent' }} 
       screenOptions={{
         headerShown: false,
       }}

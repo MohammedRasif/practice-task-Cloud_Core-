@@ -37,7 +37,6 @@ export default function LoginScreen() {
           text2: 'Signed in successfully.',
         });
 
-        // Store credentials in Redux
         dispatch(setCredentials({
           user: response.data,
           token: response.data.token,
@@ -45,7 +44,6 @@ export default function LoginScreen() {
           device_token: '',
         }));
 
-        // Navigate to the main app
         router.push('/(tabs)/home');
       } else {
         Toast.show({
@@ -72,13 +70,11 @@ export default function LoginScreen() {
         bottomOffset={62}
       >
         
-        {/* Header Section */}
         <View style={styles.headerContainer}>
           <Text style={styles.title}>Welcome Back</Text>
           <Text style={styles.subtitle}>Sign in to continue</Text>
         </View>
 
-        {/* Input Fields */}
         <View style={styles.formContainer}>
           <View style={styles.inputWrapper}>
             <Ionicons name="call-outline" size={20} color="#6B7280" style={styles.inputIcon} />
@@ -112,7 +108,6 @@ export default function LoginScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* Action Button */}
         <TouchableOpacity 
           style={styles.buttonContainer} 
           onPress={handleLogin} 
@@ -133,7 +128,6 @@ export default function LoginScreen() {
           </LinearGradient>
         </TouchableOpacity>
 
-        {/* Navigation Link */}
         <View style={styles.footerContainer}>
           <Text style={styles.footerText}>Don't have an account? </Text>
           <TouchableOpacity onPress={() => router.push('/(auth)/register')}>

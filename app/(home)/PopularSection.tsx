@@ -75,7 +75,6 @@ export default function PopularSection() {
         ))}
       </View>
 
-      {/* See All Button - Only show if more than 6 items */}
       {allIndustries.length > 6 && (
         <View className="items-center mt-4">
           <TouchableOpacity 

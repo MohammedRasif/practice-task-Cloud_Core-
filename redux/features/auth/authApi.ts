@@ -26,7 +26,6 @@ const authApi = baseApi.injectEndpoints({
       }),
     }),
 
-    // Keep other relevant mutations if needed, or remove them for now
     forgetPassword: builder.mutation({
       query: (userInfo) => ({
         url: "auth/password-reset/request/",
