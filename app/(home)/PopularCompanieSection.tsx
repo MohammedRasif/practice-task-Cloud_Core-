@@ -20,10 +20,10 @@ export default function PopularCompanieSection() {
   }
 
   return (
-    <View className="px-6 py-8 bg-white ">
+    <View className="px-6 py-8 bg-white dark:bg-slate-900">
       <View className="items-center mb-7">
-        <View className="bg-[#F0F6FF] px-5 py-2.5 rounded-full">
-          <Text className="text-[20px] font-extrabold text-gray-600">
+        <View className="bg-[#F0F6FF] dark:bg-slate-800 px-5 py-2.5 rounded-full">
+          <Text className="text-[20px] font-extrabold text-gray-600 dark:text-slate-300">
             Popular Companies
           </Text>
         </View>
@@ -33,7 +33,7 @@ export default function PopularCompanieSection() {
         {companies.map((item) => (
           <View 
             key={item.id} 
-            className="bg-white rounded-xl py-4 px-4 border border-gray-100 items-center justify-center w-[48%] mb-2"
+            className="bg-white dark:bg-slate-800 rounded-xl py-4 px-4 border border-gray-100 dark:border-slate-700 items-center justify-center w-[48%] mb-2"
             style={{
               shadowColor: '#000',
               shadowOffset: { width: 0, height: 2 },
@@ -42,7 +42,7 @@ export default function PopularCompanieSection() {
               elevation: 3,
             }}
           >
-            <View className="w-[72px] h-[72px] rounded-full border border-gray-200 items-center justify-center mb-4 bg-white overflow-hidden">
+            <View className="w-[72px] h-[72px] rounded-full border border-gray-200 dark:border-slate-600 items-center justify-center mb-4 bg-white dark:bg-slate-700 overflow-hidden">
               <Image 
                 source={{ uri: `${API_IMAGE_URL}/${item.image}` }} 
                 className="w-12 h-12" 
@@ -50,10 +50,10 @@ export default function PopularCompanieSection() {
               />
             </View>
             
-            <Text className="text-[20px] font-extrabold text-gray-600 text-center mb-1.5" numberOfLines={1}>
+            <Text className="text-[20px] font-extrabold text-gray-600 dark:text-white text-center mb-1.5" numberOfLines={1}>
               {item.name}
             </Text>
-            <Text className="text-[16px] text-[#94A3B8] text-center">
+            <Text className="text-[16px] text-[#94A3B8] dark:text-slate-400 text-center">
               {item.jobs_count} Available Jobs
             </Text>
           </View>

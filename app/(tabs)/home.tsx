@@ -10,7 +10,11 @@ import PopularCompanieSection from "../(home)/PopularCompanieSection";
 
 export default function HomeScreen() {
   return (
-    <ScrollView className="flex-1 bg-white " showsVerticalScrollIndicator={false}>
+    <ScrollView 
+      className="flex-1 bg-white dark:bg-slate-900" 
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ paddingBottom: 100 }}
+    >
       <HeroSection />
       <PopularSection />
       {/* <TrendingSection /> */}

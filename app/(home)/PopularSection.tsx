@@ -28,10 +28,10 @@ export default function PopularSection() {
   }
 
   return (
-    <View className="px-6 pt-8 pb-10 bg-white">
+    <View className="px-6 pt-8 pb-10 bg-white dark:bg-slate-900">
       <View className="items-center mb-7">
-        <View className="bg-[#F0F6FF] px-5 py-2.5 rounded-full">
-          <Text className="text-[20px] font-extrabold text-gray-600">
+        <View className="bg-[#F0F6FF] dark:bg-slate-800 px-5 py-2.5 rounded-full">
+          <Text className="text-[20px] font-extrabold text-gray-600 dark:text-slate-300">
             Popular Industries
           </Text>
         </View>
@@ -43,7 +43,7 @@ export default function PopularSection() {
             key={item.id} 
             activeOpacity={0.7}
             onPress={() => handlePress(item.id)}
-            className="bg-white rounded-xl py-5 px-3 items-center justify-start border border-[#F8FAFC] mb-4 border-radius-2xl shadow-2xl"
+            className="bg-white dark:bg-slate-800 rounded-xl py-5 px-3 items-center justify-start border border-[#F8FAFC] dark:border-slate-700 mb-4 border-radius-2xl shadow-2xl"
             style={{ 
               width: cardWidth,
               elevation: 3,
@@ -53,22 +53,22 @@ export default function PopularSection() {
               shadowRadius: 12,
             }}
           >
-            <View className="mb-3 h-10 w-10 justify-center items-center overflow-hidden">
+            <View className="mb-4 h-16 w-16 rounded-full border border-gray-200 dark:border-slate-700 justify-center items-center overflow-hidden bg-white dark:bg-slate-700">
               <Image 
                 source={{ uri: `${API_IMAGE_URL}${item.image}` }} 
-                className="w-full h-full" 
+                className="w-16 h-16" 
                 resizeMode="contain" 
               />
             </View>
 
             <Text 
-              className="text-[18px] font-bold text-gray-600 text-center mb-1.5 h-14" 
+              className="text-[18px] font-bold text-gray-600 dark:text-white text-center mb-1.5 h-14" 
               numberOfLines={2}
             >
               {item.name}
             </Text>
 
-            <Text className="text-[16px] text-[#94A3B8] text-center">
+            <Text className="text-[16px] text-[#94A3B8] dark:text-slate-400 text-center">
               {item.jobs_count} Available Jobs
             </Text>
           </TouchableOpacity>

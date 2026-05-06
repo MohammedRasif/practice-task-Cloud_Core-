@@ -9,6 +9,7 @@ import Animated, {
   useSharedValue, 
   withSpring,
 } from 'react-native-reanimated';
+import { useColorScheme } from 'nativewind';
 
 const { width } = Dimensions.get('window');
 const TAB_BAR_HEIGHT = 65;
@@ -19,7 +20,7 @@ export default function _layout() {
   return (
     <Tabs
       tabBar={(props) => <CustomTabBar {...props} insets={insets} />}
-      sceneContainerStyle={{ paddingBottom: TAB_BAR_HEIGHT + insets.bottom }}
+      sceneContainerStyle={{ backgroundColor: 'transparent' }} // Ensure background doesn't interfere
       screenOptions={{
         headerShown: false,
       }}
@@ -35,6 +36,8 @@ export default function _layout() {
 }
 
 function CustomTabBar({ state, descriptors, navigation, insets }: any) {
+  const { colorScheme } = useColorScheme();
+  const isDark = colorScheme === 'dark';
   const translateX = useSharedValue(0);
   const tabWidth = width / state.routes.length;
 
@@ -55,22 +58,30 @@ function CustomTabBar({ state, descriptors, navigation, insets }: any) {
         styles.tabBarContainer, 
         { 
           height: TAB_BAR_HEIGHT + insets.bottom,
-          paddingBottom: insets.bottom 
+          paddingBottom: insets.bottom,
+          backgroundColor: isDark ? '#1E293B' : 'transparent',
+          borderTopColor: isDark ? '#334155' : 'transparent',
+          borderTopWidth: isDark ? 1 : 0,
         }
       ]}
     >
-      <LinearGradient
-        colors={['#1E3A8A', '#3B82F6']}
-        style={styles.gradientBackground}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-      />
+      {!isDark && (
+        <LinearGradient
+          colors={['#1E3A8A', '#3B82F6']}
+          style={styles.gradientBackground}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+        />
+      )}
       
       {/* Sliding Indicator */}
       <Animated.View 
         style={[
           styles.indicator, 
-          { width: tabWidth - 16 }, 
+          { 
+            width: tabWidth - 16,
+            backgroundColor: isDark ? '#3B82F6' : '#FFFFFF',
+          }, 
           animatedIndicatorStyle
         ]} 
       />
@@ -113,7 +124,7 @@ function CustomTabBar({ state, descriptors, navigation, insets }: any) {
               <Ionicons 
                 name={getIconName(route.name, isFocused)} 
                 size={24} 
-                color={isFocused ? '#1E3A8A' : '#FFFFFF'} 
+                color={isFocused ? (isDark ? '#FFFFFF' : '#1E3A8A') : (isDark ? '#94A3B8' : '#FFFFFF')} 
               />
             </View>
           </TouchableOpacity>
@@ -130,7 +141,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'transparent',
     elevation: 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: -4 },
@@ -148,7 +158,6 @@ const styles = StyleSheet.create({
   indicator: {
     position: 'absolute',
     height: 48,
-    backgroundColor: '#FFFFFF',
     borderRadius: 24,
     left: 8,
     top: 8,
