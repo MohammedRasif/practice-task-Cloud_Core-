@@ -1,53 +1,28 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { StyleSheet, View, Platform } from 'react-native';
+import { StyleSheet, View, Platform, Dimensions, TouchableOpacity, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Animated, { 
+  useAnimatedStyle, 
+  useSharedValue, 
+  withSpring,
+} from 'react-native-reanimated';
+
+const { width } = Dimensions.get('window');
+const TAB_BAR_HEIGHT = 65;
 
 export default function _layout() {
   const insets = useSafeAreaInsets();
 
   return (
     <Tabs
-      sceneContainerStyle={{ paddingBottom: insets.bottom + 85 }}
-      screenOptions={({ route }) => ({
+      tabBar={(props) => <CustomTabBar {...props} insets={insets} />}
+      sceneContainerStyle={{ paddingBottom: TAB_BAR_HEIGHT + insets.bottom }}
+      screenOptions={{
         headerShown: false,
-        tabBarShowLabel: false, 
-        tabBarActiveTintColor: '#2563EB', 
-        tabBarInactiveTintColor: '#FFFFFF', 
-        tabBarStyle: [styles.tabBar, { bottom: insets.bottom ? insets.bottom + 10 : Platform.OS === 'ios' ? 30 : 20 }],
-        tabBarBackground: () => (
-          <LinearGradient
-            colors={['#1E3A8A', '#3B82F6']} // More professional deep blue gradient
-            style={{ flex: 1, borderRadius: 30 }}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-          />
-        ),
-        tabBarIcon: ({ color, focused }) => {
-          let iconName: any = 'help-circle-outline';
-
-          switch (route.name) {
-            case 'home': iconName = focused ? 'home' : 'home-outline'; break;
-            case 'checkin': iconName = focused ? 'grid' : 'grid-outline'; break;
-            case 'event': iconName = focused ? 'calendar' : 'calendar-outline'; break;
-            case 'history': iconName = focused ? 'time' : 'time-outline'; break;
-            case 'message': iconName = focused ? 'chatbubble' : 'chatbubble-outline'; break;
-            case 'profile': iconName = focused ? 'person' : 'person-outline'; break;
-          }
-
-          return (
-            <View style={[styles.iconContainer, focused && styles.activeIconContainer]}>
-              <Ionicons 
-                name={iconName} 
-                size={22} 
-                color={focused ? '#1E3A8A' : '#FFFFFF'} 
-              />
-            </View>
-          );
-        },
-      })}
+      }}
     >
       <Tabs.Screen name="home" options={{ title: 'Home' }} />
       <Tabs.Screen name="checkin" options={{ title: 'Check-In' }} />
@@ -59,34 +34,134 @@ export default function _layout() {
   );
 }
 
+function CustomTabBar({ state, descriptors, navigation, insets }: any) {
+  const translateX = useSharedValue(0);
+  const tabWidth = width / state.routes.length;
+
+  useEffect(() => {
+    translateX.value = withSpring(state.index * tabWidth, {
+      damping: 20,
+      stiffness: 150,
+    });
+  }, [state.index]);
+
+  const animatedIndicatorStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: translateX.value }],
+  }));
+
+  return (
+    <View 
+      style={[
+        styles.tabBarContainer, 
+        { 
+          height: TAB_BAR_HEIGHT + insets.bottom,
+          paddingBottom: insets.bottom 
+        }
+      ]}
+    >
+      <LinearGradient
+        colors={['#1E3A8A', '#3B82F6']}
+        style={styles.gradientBackground}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+      />
+      
+      {/* Sliding Indicator */}
+      <Animated.View 
+        style={[
+          styles.indicator, 
+          { width: tabWidth - 16 }, 
+          animatedIndicatorStyle
+        ]} 
+      />
+
+      {state.routes.map((route: any, index: number) => {
+        const isFocused = state.index === index;
+
+        const onPress = () => {
+          const event = navigation.emit({
+            type: 'tabPress',
+            target: route.key,
+            canPreventDefault: true,
+          });
+
+          if (!isFocused && !event.defaultPrevented) {
+            navigation.navigate(route.name);
+          }
+        };
+
+        const getIconName = (name: string, focused: boolean) => {
+          switch (name) {
+            case 'home': return focused ? 'home' : 'home-outline';
+            case 'checkin': return focused ? 'grid' : 'grid-outline';
+            case 'event': return focused ? 'calendar' : 'calendar-outline';
+            case 'history': return focused ? 'time' : 'time-outline';
+            case 'message': return focused ? 'chatbubble' : 'chatbubble-outline';
+            case 'profile': return focused ? 'person' : 'person-outline';
+            default: return 'help-circle-outline';
+          }
+        };
+
+        return (
+          <TouchableOpacity
+            key={route.key}
+            onPress={onPress}
+            style={[styles.tabItem, { width: tabWidth }]}
+            activeOpacity={0.7}
+          >
+            <View style={styles.iconWrapper}>
+              <Ionicons 
+                name={getIconName(route.name, isFocused)} 
+                size={24} 
+                color={isFocused ? '#1E3A8A' : '#FFFFFF'} 
+              />
+            </View>
+          </TouchableOpacity>
+        );
+      })}
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
-  tabBar: {
+  tabBarContainer: {
+    flexDirection: 'row',
     position: 'absolute',
-    left: 20,
-    right: 20,
-    elevation: 8,
-    height: 65,
-    borderTopWidth: 0,
-    borderRadius: 35, 
-    backgroundColor: 'transparent', 
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'transparent',
+    elevation: 20,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: -4 },
+    shadowOpacity: 0.1,
     shadowRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    overflow: 'hidden',
   },
-  iconContainer: {
-    width: 45,
-    height: 45,
+  gradientBackground: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  indicator: {
+    position: 'absolute',
+    height: 48,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 24,
+    left: 8,
+    top: 8,
+  },
+  tabItem: {
+    height: TAB_BAR_HEIGHT,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 22.5, 
   },
-  activeIconContainer: {
-    backgroundColor: '#FFFFFF',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+  iconWrapper: {
+    width: 48,
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

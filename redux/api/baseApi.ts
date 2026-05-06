@@ -5,7 +5,6 @@ import { logout, updateToken } from "../features/auth/authSlice";
 import { RootState } from "../store";
 
 export const API_IMAGE_URL = "https://api.bhcjobs.com/storage";
-// export const API_IMAGE_URL = "http://10.10.13.61:8002"
 
 const API_URL = "https://dev.bhcjobs.com"
   .replace(/"/g, "")
@@ -16,7 +15,6 @@ const baseQuery = fetchBaseQuery({
   timeout: 15000, // 15 seconds timeout
   credentials: "include",
   prepareHeaders: (headers, { getState, endpoint }) => {
-    // Skip token for public endpoints
     const skipAuth = [
       "login",
       "register",
@@ -56,7 +54,6 @@ const baseQueryWithReauth: any = async (
     }
   }
 
-  // Handle known errors
   if (result.error?.status === 401) {
     if (__DEV__) console.log("Token expired — attempting refresh");
 
@@ -87,14 +84,12 @@ const baseQueryWithReauth: any = async (
           return result;
         }
 
-        // Update token in store
         api.dispatch(
           updateToken({
             token: data.access,
           }),
         );
 
-        // Retry original request
         result = await baseQuery(args, api, extraOptions);
       } else {
         throw new Error("Refresh failed");
@@ -109,18 +104,15 @@ const baseQueryWithReauth: any = async (
     }
   }
 
-  // Optional: global error handling
   if (result.error) {
     const message =
       (result.error.data as any)?.message || "Something went wrong";
     const isApproveRejectEndpoint = requestUrl?.includes("/expenses/approve/");
     const is403Error = result.error.status === 403;
 
-    // Don't show toast for expected 403 errors on approve/reject (handled in UI)
     if (result.error.status === 403) {
       Toast.show({ type: "error", text1: message });
     } else if (result.error.status === 404) {
-      // Toast.show({ text1: message, type: "error" });
       console.log("404 error", message);
     } else if (
       typeof result.error.status === "number" &&

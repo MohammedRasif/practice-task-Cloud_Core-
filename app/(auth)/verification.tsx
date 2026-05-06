@@ -16,7 +16,6 @@ export default function VerificationScreen() {
 
   const [verifyPhone, { isLoading }] = useVerifyPhoneMutation();
 
-  // Auto-fill OTP if passed from registration (convenience for development/testing)
   useEffect(() => {
     if (initialOtp && initialOtp.length === 4) {
       setCode(initialOtp.split(''));
@@ -75,11 +74,10 @@ export default function VerificationScreen() {
           text2: 'Your phone number has been verified.',
         });
 
-        // Store credentials in Redux (which will persist to SecureStore)
         dispatch(setCredentials({
           user: response.data,
           token: response.data.token,
-          refreshToken: '', // Not provided by this endpoint
+          refreshToken: '', 
           device_token: '',
         }));
 

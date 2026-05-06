@@ -53,7 +53,7 @@ export default function PopularSection() {
           >
             <View className="mb-3 h-10 w-10 justify-center items-center overflow-hidden">
               <Image 
-                source={{ uri: `${API_IMAGE_URL}/${item.image}` }} 
+                source={{ uri: `${API_IMAGE_URL}${item.image}` }} 
                 className="w-full h-full" 
                 resizeMode="contain" 
               />
