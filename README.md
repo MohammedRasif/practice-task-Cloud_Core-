@@ -1,50 +1,62 @@
-# Welcome to your Expo app 👋
+# 📱 Mobile App (React Native)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is a mobile application built using **React Native**, **TypeScript**, and **Redux Toolkit**.  
+The app follows modern UI/UX practices and includes authentication, validation, and theme customization features.
 
-## Get started
+---
 
-1. Install dependencies
+## 🚀 Features
 
-   ```bash
-   npm install
-   ```
+### 🔐 Authentication System
+- Login page as the entry point of the app
+- Users can navigate to the registration page from login
+- Full input validation on all forms
+- After successful registration:
+  - A verification code is received from the API response
+  - Users must submit the verification code
+  - On successful verification, users are redirected to the Home page
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+### 🏠 Landing / Home Page
+- Clean and modern landing page design
+- Hero section at the top
+- Multiple structured sections below the hero area
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### 🌙 Dark Mode
+- Users can toggle between **Light Mode** and **Dark Mode**
+- Improves user experience and accessibility
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+### ✅ Form Validation
+- All input fields are properly validated
+- Ensures correct user input before submission
 
-When you're ready, run:
+---
+
+## 🛠️ Tech Stack
+
+- **React Native**
+- **TypeScript**
+- **Redux Toolkit (RTK)**
+- **React Navigation**
+
+---
+
+## 📦 Installation
 
 ```bash
-npm run reset-project
-```
+# Clone the repository
+git clone https://github.com/your-username/your-repo-name.git
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+# Navigate to project folder
+cd your-repo-name
 
-## Learn more
+# Install dependencies
+npm install
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+# Run the app
+npx expo run:android 
