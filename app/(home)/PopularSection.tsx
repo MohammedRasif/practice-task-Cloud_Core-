@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Dimensions, Image, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useGetIndustriesQuery } from '../../redux/features/home/homeApi';
@@ -10,12 +10,14 @@ const cardWidth = (width - 48 - 16) / 2;
 export default function PopularSection() {
   const router = useRouter();
   const { data, isLoading } = useGetIndustriesQuery();
+  const [showAll, setShowAll] = useState(false);
 
   const handlePress = (id: number) => {
     router.push(`/(industry)/${id}` as any); 
   };
 
-  const industries = data?.data?.slice(0, 6) || [];
+  const allIndustries = data?.data || [];
+  const industries = showAll ? allIndustries : allIndustries.slice(0, 6);
 
   if (isLoading) {
     return (
@@ -73,15 +75,19 @@ export default function PopularSection() {
         ))}
       </View>
 
-      {/* See All Button */}
-      <View className="items-center mt-4">
-        <TouchableOpacity 
-          className="px-6 py-2 border border-[#4A88FF] rounded-full"
-          onPress={() => router.push('/(industry)/all' as any)}
-        >
-          <Text className="text-[#4A88FF] font-bold">See All</Text>
-        </TouchableOpacity>
-      </View>
+      {/* See All Button - Only show if more than 6 items */}
+      {allIndustries.length > 6 && (
+        <View className="items-center mt-4">
+          <TouchableOpacity 
+            className="px-6 py-2 border border-[#4A88FF] rounded-full"
+            onPress={() => setShowAll(!showAll)}
+          >
+            <Text className="text-[#4A88FF] font-bold">
+              {showAll ? 'Show Less' : 'See All'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { FontAwesome5, Ionicons, Entypo } from '@expo/vector-icons';
 import { useGetJobsQuery } from '../../redux/features/home/homeApi';
@@ -6,8 +6,10 @@ import { API_IMAGE_URL } from '../../redux/api/baseApi';
 
 export default function RecommendedSection() {
   const { data, isLoading } = useGetJobsQuery();
+  const [showAll, setShowAll] = useState(false);
   
-  const jobs = data?.data?.slice(0, 5) || [];
+  const allJobs = data?.data || [];
+  const jobs = showAll ? allJobs : allJobs.slice(0, 5);
 
   const convertSARtoBDT = (sar: number) => {
     return (sar * 33).toLocaleString();
@@ -118,6 +120,20 @@ export default function RecommendedSection() {
           </View>
         ))}
       </View>
+
+      {/* See All Button - Only show if more than 5 items */}
+      {allJobs.length > 5 && (
+        <View className="items-center mt-4">
+          <TouchableOpacity 
+            className="px-6 py-2 border border-[#4A88FF] rounded-full"
+            onPress={() => setShowAll(!showAll)}
+          >
+            <Text className="text-[#4A88FF] font-bold">
+              {showAll ? 'Show Less' : 'See All'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 }

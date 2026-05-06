@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { useGetCompaniesQuery } from '../../redux/features/home/homeApi';
@@ -6,8 +6,10 @@ import { API_IMAGE_URL } from '../../redux/api/baseApi';
 
 export default function PopularCompanieSection() {
   const { data, isLoading } = useGetCompaniesQuery();
+  const [showAll, setShowAll] = useState(false);
 
-  const companies = data?.data?.slice(0, 6) || [];
+  const allCompanies = data?.data || [];
+  const companies = showAll ? allCompanies : allCompanies.slice(0, 6);
 
   if (isLoading) {
     return (
@@ -18,7 +20,7 @@ export default function PopularCompanieSection() {
   }
 
   return (
-    <View className="px-6 py-8 bg-white">
+    <View className="px-6 py-8 bg-white ">
       <View className="items-center mb-7">
         <View className="bg-[#F0F6FF] px-5 py-2.5 rounded-full">
           <Text className="text-[20px] font-extrabold text-gray-600">
@@ -58,14 +60,18 @@ export default function PopularCompanieSection() {
         ))}
       </View>
 
-      <View className="items-center mt-10">
-        <TouchableOpacity 
-          className="w-[56px] h-[40px] bg-white border border-[#93C5FD] rounded-lg items-center justify-center active:bg-blue-50"
-          activeOpacity={0.7}
-        >
-          <Entypo name="chevron-down" size={20} color="#3B82F6" />
-        </TouchableOpacity>
-      </View>
+      {allCompanies.length > 6 && (
+        <View className="items-center mt-10">
+          <TouchableOpacity 
+            className="px-6 py-2 border border-[#4A88FF] rounded-full"
+            onPress={() => setShowAll(!showAll)}
+          >
+            <Text className="text-[#4A88FF] font-bold">
+              {showAll ? 'Show Less' : 'See All'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 }
