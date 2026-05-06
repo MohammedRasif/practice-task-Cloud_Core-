@@ -7,14 +7,16 @@ import { HeroSection } from "../(home)/HeroSection";
 import PopularSection from "../(home)/PopularSection";
 import TrendingSection from "../(home)/TrendingSection";
 import RecommendedSection from "../(home)/RecommendedSection";
+import PopularCompanieSection from "../(home)/PopularCompanieSection";
 
 export default function HomeScreen() {
   return (
     <ScrollView className="flex-1 bg-white " showsVerticalScrollIndicator={false}>
       <HeroSection />
       <PopularSection />
-      <TrendingSection />
+      {/* <TrendingSection /> */}
       <RecommendedSection />
+      <PopularCompanieSection />
     </ScrollView>
   );
 }

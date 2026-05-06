@@ -1,10 +1,9 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
 const { width } = Dimensions.get('window');
-// Calculate card width: screen width - horizontal padding (24*2) - gap between cards (16)
 const cardWidth = (width - 48 - 16) / 2;
 
 const INDUSTRIES = [
@@ -20,35 +19,47 @@ export default function PopularSection() {
   const router = useRouter();
 
   const handlePress = (id: string) => {
-    // Navigate using the ID as requested
     router.push(`/(industry)/${id}` as any); 
   };
 
   return (
-    <View style={styles.container}>
-      {/* Title Pill */}
-      <View style={styles.titleContainer}>
-        <View style={styles.titlePill}>
-          <Text style={styles.titleText}>Popular Industries</Text>
+    <View className="px-6 pt-8 pb-10 bg-white">
+      <View className="items-center mb-7">
+        <View className="bg-[#F0F6FF] px-5 py-2.5 rounded-full">
+          <Text className="text-[20px] font-extrabold text-gray-600">
+            Popular Industries
+          </Text>
         </View>
       </View>
 
-      {/* Grid of Cards */}
-      <View style={styles.grid}>
+      <View className="flex-row flex-wrap justify-between ">
         {INDUSTRIES.map((item) => (
           <TouchableOpacity 
             key={item.id} 
-            style={styles.card}
             activeOpacity={0.7}
             onPress={() => handlePress(item.id)}
+            className="bg-white rounded-xl py-5 px-3 items-center justify-start border border-[#F8FAFC] mb-4 border-radius-2xl shadow-2xl"
+            style={{ 
+              width: cardWidth,
+              elevation: 3,
+              shadowColor: '#000',
+              shadowOffset: { width: 0, height: 4 },
+              shadowOpacity: 0.06,
+              shadowRadius: 12,
+            }}
           >
-            <View style={styles.iconContainer}>
+            <View className="mb-3 h-10 justify-center items-center">
               <MaterialIcons name={item.icon as any} size={32} color="#4A88FF" />
             </View>
-            <Text style={styles.cardTitle} numberOfLines={2}>
+
+            <Text 
+              className="text-[18px] font-bold text-gray-600 text-center mb-1.5 h-14" 
+              numberOfLines={2}
+            >
               {item.title}
             </Text>
-            <Text style={styles.cardSubtitle}>
+
+            <Text className="text-[16px] text-[#94A3B8] text-center">
               {item.jobs} Available Jobs
             </Text>
           </TouchableOpacity>
@@ -57,70 +68,3 @@ export default function PopularSection() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 24,
-    paddingTop: 32,
-    paddingBottom: 40,
-    backgroundColor: '#fff',
-  },
-  titleContainer: {
-    alignItems: 'center',
-    marginBottom: 28,
-  },
-  titlePill: {
-    backgroundColor: '#F0F6FF', // Very light blue
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 20,
-  },
-  titleText: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#334155', // Slate 700
-  },
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    rowGap: 16, // Vertical gap between rows
-  },
-  card: {
-    width: cardWidth,
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    paddingVertical: 20,
-    paddingHorizontal: 12,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    // Shadow for iOS
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.06,
-    shadowRadius: 12,
-    // Elevation for Android
-    elevation: 3,
-    borderWidth: 1,
-    borderColor: '#F8FAFC', 
-  },
-  iconContainer: {
-    marginBottom: 12,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  cardTitle: {
-    fontSize: 15,
-    fontWeight: '700',
-    color: '#334155',
-    textAlign: 'center',
-    marginBottom: 6,
-    minHeight: 40, // Ensures uniform height even if title is 1 line
-  },
-  cardSubtitle: {
-    fontSize: 12,
-    color: '#94A3B8', // Slate 400
-    textAlign: 'center',
-  }
-});
