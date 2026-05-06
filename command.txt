@@ -1,2 +1,6 @@
 npx expo prebuild --clean
 npx expo run:android 
+
+npx expo install react-native-toast-message
+
+npx expo install react-native-keyboard-controller

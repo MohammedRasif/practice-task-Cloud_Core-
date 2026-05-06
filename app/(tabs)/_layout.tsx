@@ -3,22 +3,26 @@ import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, View, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function _layout() {
+  const insets = useSafeAreaInsets();
+
   return (
     <Tabs
+      sceneContainerStyle={{ paddingBottom: insets.bottom + 85 }}
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarShowLabel: false, 
         tabBarActiveTintColor: '#2563EB', 
         tabBarInactiveTintColor: '#FFFFFF', 
-        tabBarStyle: styles.tabBar,
+        tabBarStyle: [styles.tabBar, { bottom: insets.bottom ? insets.bottom + 10 : Platform.OS === 'ios' ? 30 : 20 }],
         tabBarBackground: () => (
           <LinearGradient
-            colors={['#2563EB', '#60A5FA']}
-            style={{ flex: 1, borderTopLeftRadius: 30, borderTopRightRadius: 30 }}
+            colors={['#1E3A8A', '#3B82F6']} // More professional deep blue gradient
+            style={{ flex: 1, borderRadius: 30 }}
             start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
+            end={{ x: 1, y: 1 }}
           />
         ),
         tabBarIcon: ({ color, focused }) => {
@@ -34,11 +38,11 @@ export default function _layout() {
           }
 
           return (
-            <View style={focused ? styles.activeIconContainer : null}>
+            <View style={[styles.iconContainer, focused && styles.activeIconContainer]}>
               <Ionicons 
                 name={iconName} 
-                size={focused ? 24 : 22} 
-                color={focused ? '#2563EB' : '#FFFFFF'} 
+                size={22} 
+                color={focused ? '#1E3A8A' : '#FFFFFF'} 
               />
             </View>
           );
@@ -58,32 +62,31 @@ export default function _layout() {
 const styles = StyleSheet.create({
   tabBar: {
     position: 'absolute',
-    top: 10,
-    bottom: Platform.OS === 'ios' ? 25 : 15, 
-    left: 15,
-    right: 15,
-    elevation: 5,
-    height: 60,
+    left: 20,
+    right: 20,
+    elevation: 8,
+    height: 65,
     borderTopWidth: 0,
-    borderRadius: 30, 
+    borderRadius: 35, 
     backgroundColor: 'transparent', 
-    overflow: 'hidden',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
     shadowRadius: 10,
   },
-  activeIconContainer: {
-    backgroundColor: '#FFFFFF',
-    padding: 8,
-    borderRadius: 50, 
+  iconContainer: {
     width: 45,
     height: 45,
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: 22.5, 
+  },
+  activeIconContainer: {
+    backgroundColor: '#FFFFFF',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
+    elevation: 2,
   },
 });
