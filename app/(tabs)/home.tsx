@@ -3,9 +3,8 @@ import {
   ScrollView,
   View
 } from "react-native";
-import { HeroSection } from "../(home)/HeroSection";
+import HeroSection from "../(home)/HeroSection";
 import PopularSection from "../(home)/PopularSection";
-import TrendingSection from "../(home)/TrendingSection";
 import RecommendedSection from "../(home)/RecommendedSection";
 import PopularCompanieSection from "../(home)/PopularCompanieSection";
 

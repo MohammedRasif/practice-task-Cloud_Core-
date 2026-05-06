@@ -7,7 +7,7 @@ const { width } = Dimensions.get('window');
 const cardWidth = (width - 48 - 16) / 2;
 
 const INDUSTRIES = [
-  { id: '1', title: 'Construction', jobs: 6, icon: 'construction' },
+  { id: '1', title: 'Construction', jobs: 6, icon: 'construction'},
   { id: '2', title: 'Facilities Managem...', jobs: 1, icon: 'groups' },
   { id: '3', title: 'Fast Food Restaura...', jobs: 4, icon: 'restaurant' },
   { id: '4', title: 'Cafés & Coffee Sho...', jobs: 0, icon: 'local-cafe' },

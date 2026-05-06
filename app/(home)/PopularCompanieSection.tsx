@@ -35,20 +35,19 @@ export default function PopularCompanieSection() {
   return (
     <View className="px-6 py-8 bg-white">
       {/* Title Pill */}
-      <View className="items-center mb-8">
-        <View className="bg-[#F0F6FF] px-5 py-2.5 rounded-full">
-          <Text className="text-base font-bold text-[#334155]">
-            Popular Companies
-          </Text>
-        </View>
+     <View className="items-center mb-7">
+          <View className="bg-[#F0F6FF] px-5 py-2.5 rounded-full">
+              <Text className="text-[20px] font-extrabold text-gray-600">
+                 Popular Companies
+              </Text>
+          </View>
       </View>
 
-      {/* Grid */}
       <View className="flex-row flex-wrap justify-between gap-y-4">
         {COMPANIES.map((item) => (
           <View 
             key={item.id} 
-            className="bg-white rounded-xl py-6 px-4 border border-gray-100 items-center justify-center w-[48%]"
+            className="bg-white rounded-xl py-4 px-4 border border-gray-100 items-center justify-center w-[48%]"
             style={{
               shadowColor: '#000',
               shadowOffset: { width: 0, height: 2 },
@@ -66,11 +65,10 @@ export default function PopularCompanieSection() {
               />
             </View>
             
-            {/* Company Info */}
-            <Text className="text-[15px] font-extrabold text-[#1E293B] text-center mb-1.5" numberOfLines={1}>
+            <Text className="text-[20px] font-extrabold text-gray-600 text-center mb-1.5" numberOfLines={1}>
               {item.name}
             </Text>
-            <Text className="text-[13px] text-[#94A3B8] text-center">
+            <Text className="text-[16px] text-[#94A3B8] text-center">
               {item.jobs} Available Jobs
             </Text>
           </View>

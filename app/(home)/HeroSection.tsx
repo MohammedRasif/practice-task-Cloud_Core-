@@ -6,7 +6,7 @@ import Svg, { Defs, LinearGradient, Path, Rect, Stop } from 'react-native-svg';
 
 const { width } = Dimensions.get('window');
 
-export const HeroSection = () => {
+export default function HeroSection() {
   const wavePosition1 = useSharedValue(0);
   const wavePosition2 = useSharedValue(0);
 
@@ -23,16 +23,6 @@ export const HeroSection = () => {
     );
   }, []);
 
-  const animatedWaveStyle1 = useAnimatedStyle(() => ({
-    transform: [{ translateX: wavePosition1.value }],
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    width: width * 3,
-    height: 100,
-    opacity: 0.4,
-  }));
-
   const animatedWaveStyle2 = useAnimatedStyle(() => ({
     transform: [{ translateX: wavePosition2.value }],
     position: 'absolute',
@@ -43,14 +33,14 @@ export const HeroSection = () => {
   }));
 
   return (
-    <View className="h-[400px] w-full relative overflow-hidden border-b border-[#2563EB]">
+    <View className="h-[400px] w-full relative overflow-hidden bg-white">
       {/* Background Gradient */}
       <View className="absolute inset-0">
         <Svg height="100%" width="100%">
           <Defs>
             <LinearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
-              <Stop offset="0" stopColor="#4A88FF" stopOpacity="1" />
-              <Stop offset="1" stopColor="#7AB4FF" stopOpacity="1" />
+              <Stop offset="0" stopColor="#2563EB" stopOpacity="1" />
+              <Stop offset="1" stopColor="#60A5FA" stopOpacity="1" />
             </LinearGradient>
           </Defs>
           <Rect width="100%" height="100%" fill="url(#grad)" />
@@ -85,17 +75,7 @@ export const HeroSection = () => {
 
       {/* Wave Container with Raw CSS for Animation Logic */}
       <View style={{ position: 'absolute', bottom: -1, left: 0, right: 0, height: 100, zIndex: 5 }}>
-        {/* Back Wave */}
-        <Animated.View style={animatedWaveStyle1}>
-          <Svg height="100" width={width * 3} viewBox={`0 0 ${width * 3} 100`}>
-            <Path
-              d={`M0 50 Q ${width / 4} 30, ${width / 2} 50 T ${width} 50 T ${width * 1.5} 50 T ${width * 2} 50 T ${width * 2.5} 50 T ${width * 3} 50 V 100 H 0 Z`}
-              fill="white"
-            />
-          </Svg>
-        </Animated.View>
-
-        {/* Front Wave */}
+        {/* Single Front Wave that Animates */}
         <Animated.View style={animatedWaveStyle2}>
           <Svg height="100" width={width * 3} viewBox={`0 0 ${width * 3} 100`}>
             <Path
